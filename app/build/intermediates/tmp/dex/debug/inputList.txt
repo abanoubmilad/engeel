@@ -1,0 +1,7 @@
+C:\Users\bono\AndroidStudioProjects\Engeel\app\build\intermediates\classes\debug
+C:\Users\bono\AndroidStudioProjects\Engeel\app\build\intermediates\pre-dexed\debug\support-annotations-23.4.0-a4cfb5e538b100e56333cd12dc68057ddd919525.jar
+C:\Users\bono\AndroidStudioProjects\Engeel\app\build\intermediates\pre-dexed\debug\classes-7b7ebdd8fa8d09f2ba6e1f4b1d4965c68f752646.jar
+C:\Users\bono\AndroidStudioProjects\Engeel\app\build\intermediates\pre-dexed\debug\classes-f4abb2b72017abfdfb3750eccd6a468978405aae.jar
+C:\Users\bono\AndroidStudioProjects\Engeel\app\build\intermediates\pre-dexed\debug\internal_impl-23.4.0-dd1a4b858671763f066335c4f84cb08514b972cd.jar
+C:\Users\bono\AndroidStudioProjects\Engeel\app\build\intermediates\pre-dexed\debug\classes-b03f381c21e2ce7c7e8aec9285a16eecc6dd5ca9.jar
+C:\Users\bono\AndroidStudioProjects\Engeel\app\build\intermediates\pre-dexed\debug\classes-00747871d1f2f47a1d66061ef38b8a2a9e83b259.jar

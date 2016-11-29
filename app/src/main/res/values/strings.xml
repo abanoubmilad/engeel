@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">إنجيل</string>
+    <string name="search_new_test">عهد جديد</string>
+    <string name="search_old_test">عهد قديم</string>
+    <string name="copyright">engeel 1.4 ©%1$s Abanoub M.</string>
+    <string name="share">شير</string>
+    <string name="tweet">تويت</string>
+    <string name="searchbible">بحث كتاب مقدس</string>
+    <string name="shahd">بحث بالشاهد</string>
+    <string name="new_bibles">أسفار العهد الجديد</string>
+    <string name="old_bibles">أسفار العهد القديم</string>
+    <string name="contact">تواصل معنا</string>
+    <string name="verses">الآيات</string>
+    <string name="searchfor">ابحث عن</string>
+    <string name="err.msg.db">خطأ أثناء محاولة عرض البيانات</string>
+    <string name="msg.added">تم اضافة الآية الى الآيات المٌفضلة</string>
+    <string name="msg.removed">تم ازالة الآية من الآيات المٌفضلة</string>
+    <string name="msg.no.fav">ﻻ توجد آيات مُفضلة</string>
+    
+</resources>

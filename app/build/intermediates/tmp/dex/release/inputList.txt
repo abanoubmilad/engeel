@@ -1,0 +1,1 @@
+C:\Users\bono\AndroidStudioProjects\Engeel\app\build\intermediates\classes-proguard\release\classes.jar
