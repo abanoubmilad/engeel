@@ -1,8 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <include layout="@layout/header" />
 
@@ -10,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.35"
-        android:background="@color/grey" >
+        android:background="@color/grey">
 
         <ImageView
             android:layout_width="match_parent"
@@ -21,15 +20,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="10dp"
+            android:layout_alignParentBottom="true"
             android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
             android:background="#60000000"
-            android:paddingBottom="5dp"
             android:paddingLeft="15dp"
-            android:paddingRight="10dp"
             android:paddingTop="5dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
             android:text="الكتاب المقدس\n وعد حقيقى كل يوم"
             android:textColor="#ffffff"
             android:textSize="20sp"
@@ -44,8 +43,7 @@
         android:background="@color/white"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:verticalScrollbarPosition="left" >
-    </ListView>
+        android:verticalScrollbarPosition="left"></ListView>
 
     <TextView
         android:id="@+id/footer"

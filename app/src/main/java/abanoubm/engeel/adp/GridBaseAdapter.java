@@ -2,23 +2,23 @@ package abanoubm.engeel.adp;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import abanoubm.engeel.R;
 import abanoubm.engeel.main.BibileInfo;
 
 public class GridBaseAdapter extends BaseAdapter {
 
-    private int fieldsCount;
-    private Context context;
-
     private static int white = Color.WHITE,
             grey;
+    private int fieldsCount;
+    private Context context;
 
     public GridBaseAdapter(Context context, int fieldsCount) {
         this.fieldsCount = fieldsCount;

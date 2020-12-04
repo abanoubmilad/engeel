@@ -1,11 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical" >
+    android:orientation="vertical">
+
     <include layout="@layout/header" />
-    
+
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
@@ -13,7 +13,6 @@
         android:layout_weight="0.9"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:verticalScrollbarPosition="left" >
-    </ListView>
+        android:verticalScrollbarPosition="left"></ListView>
 
 </LinearLayout>

@@ -2,33 +2,33 @@ package abanoubm.engeel.data;
 
 public class Verse {
 
-	private int bid;
-	private int cid;
-	private int vid;
-	private String text;
+    private int bid;
+    private int cid;
+    private int vid;
+    private String text;
 
-	public int getBid() {
-		return bid;
-	}
+    public Verse(int bid, int cid, int vid, String text) {
+        super();
+        this.bid = bid;
+        this.cid = cid;
+        this.vid = vid;
+        this.text = text;
+    }
 
-	public int getCid() {
-		return cid;
-	}
+    public int getBid() {
+        return bid;
+    }
 
-	public int getVid() {
-		return vid;
-	}
+    public int getCid() {
+        return cid;
+    }
 
-	public Verse(int bid, int cid, int vid, String text) {
-		super();
-		this.bid = bid;
-		this.cid = cid;
-		this.vid = vid;
-		this.text = text;
-	}
+    public int getVid() {
+        return vid;
+    }
 
-	public String getText() {
-		return text;
-	}
+    public String getText() {
+        return text;
+    }
 
 }

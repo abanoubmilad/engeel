@@ -8,8 +8,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -18,10 +16,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import abanoubm.engeel.BuildConfig;
 import abanoubm.engeel.R;
 import abanoubm.engeel.opr.BibleChooser;
 import abanoubm.engeel.opr.DisplaySearchResults;
@@ -30,49 +32,16 @@ import abanoubm.engeel.opr.ShahdDisplay;
 
 public class Main extends Activity {
 
-    private class GetFavouritesTask extends AsyncTask<Void, Void, Boolean> {
-        private ProgressDialog pBar;
-
-        @Override
-        protected void onPreExecute() {
-            pBar = new ProgressDialog(Main.this);
-            pBar.setCancelable(false);
-            pBar.show();
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            try {
-                BibileInfo.searchResults = FavouriteDB.getInstance(
-                        getApplicationContext()).getFavourites(
-                        getApplicationContext());
-                return BibileInfo.searchResults.size() != 0;
-            } catch (Exception e) {
-                return false;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            if (result)
-                startActivity(new Intent(getApplicationContext(),
-                        DisplaySearchResults.class));
-            else
-                Toast.makeText(getApplicationContext(), R.string.msg_no_fav,
-                        Toast.LENGTH_SHORT).show();
-            pBar.dismiss();
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ((TextView) findViewById(R.id.footer)).setText(String.format(
-                getResources().getString(R.string.copyright),
-                new SimpleDateFormat("yyyy", Locale.getDefault())
-                        .format(new Date())));
+        ((TextView) findViewById(R.id.footer)).setText(
+                getResources().getString(R.string.copyright,
+                        BuildConfig.VERSION_NAME,
+                        new SimpleDateFormat("yyyy", Locale.getDefault())
+                                .format(new Date())));
         ((TextView) findViewById(R.id.subhead)).setText(R.string.app_name);
 
         ListView lv = (ListView) findViewById(R.id.list);
@@ -107,17 +76,6 @@ public class Main extends Activity {
                         break;
                     case 5:
                         try {
-                            getPackageManager().getPackageInfo(
-                                    "com.facebook.katana", 0);
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri
-                                    .parse("fb://page/573426346093287")));
-                        } catch (Exception e) {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri
-                                    .parse("https://www.facebook.com/engeelapp")));
-                        }
-                        break;
-                    case 6:
-                        try {
                             getPackageManager().getPackageInfo("com.facebook.katana", 0);
                             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://profile/1363784786"))
                                     .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
@@ -144,5 +102,39 @@ public class Main extends Activity {
 
         }
 
+    }
+
+    private class GetFavouritesTask extends AsyncTask<Void, Void, Boolean> {
+        private ProgressDialog pBar;
+
+        @Override
+        protected void onPreExecute() {
+            pBar = new ProgressDialog(Main.this);
+            pBar.setCancelable(false);
+            pBar.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try {
+                BibileInfo.searchResults = FavouriteDB.getInstance(
+                        getApplicationContext()).getFavourites(
+                        getApplicationContext());
+                return BibileInfo.searchResults.size() != 0;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if (result)
+                startActivity(new Intent(getApplicationContext(),
+                        DisplaySearchResults.class));
+            else
+                Toast.makeText(getApplicationContext(), R.string.msg_no_fav,
+                        Toast.LENGTH_SHORT).show();
+            pBar.dismiss();
+        }
     }
 }

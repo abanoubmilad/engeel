@@ -1,12 +1,5 @@
 package abanoubm.engeel.opr;
 
-import java.net.URLEncoder;
-import java.util.List;
-
-import abanoubm.engeel.R;
-import abanoubm.engeel.main.BibileInfo;
-import abanoubm.engeel.main.DB;
-import abanoubm.engeel.main.FavouriteDB;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -14,239 +7,248 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
+import java.net.URLEncoder;
+import java.util.List;
+
+import abanoubm.engeel.R;
+import abanoubm.engeel.main.BibileInfo;
+import abanoubm.engeel.main.DB;
+import abanoubm.engeel.main.FavouriteDB;
+
 public class DisplayVerse extends Activity {
-	private TextView displayText;
-	private String shahd;
-	private ImageView favouriteBtn;
-	private boolean isFavourite = false;
+    private TextView displayText;
+    private String shahd;
+    private ImageView favouriteBtn;
+    private boolean isFavourite = false;
 
-	private class FetchVerseTask extends AsyncTask<Integer, Void, String> {
+    private String urlEncode(String s) {
+        try {
+            return URLEncoder.encode(s, "UTF-8");
+        } catch (Exception e) {
+            return "";
+        }
+    }
 
-		@Override
-		protected String doInBackground(Integer... params) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_display_verse);
 
-			try {
-				return DB.getInstance(getApplicationContext()).getVerse(
-						params[0], params[1], params[2]);
-			} catch (Exception e) {
-				return null;
-			}
-		}
+        final int bid = getIntent().getIntExtra("bid", 0), cid = getIntent()
+                .getIntExtra("cid", 1), vid = getIntent().getIntExtra("vid", 1);
 
-		@Override
-		protected void onPostExecute(String str) {
-			if (str != null)
-				displayText.setText(str + " " + shahd);
-			else
-				Toast.makeText(getApplicationContext(), R.string.err_msg_db,
-						Toast.LENGTH_SHORT).show();
-		}
-	}
+        shahd = BibileInfo.shahhd[bid] + "(" + BibileInfo.getArabicNum(cid)
+                + " : " + BibileInfo.getArabicNum(vid) + ")";
 
-	private class CheckFavouriteTask extends AsyncTask<Integer, Void, Boolean> {
-		private ProgressDialog pBar;
+        ((TextView) findViewById(R.id.subhead)).setText(shahd);
 
-		@Override
-		protected void onPreExecute() {
-			pBar = new ProgressDialog(DisplayVerse.this);
-			pBar.setCancelable(false);
-			pBar.show();
-		}
+        TextView tw = (TextView) findViewById(R.id.tw_iv);
+        TextView fb = (TextView) findViewById(R.id.fb_iv);
 
-		@Override
-		protected Boolean doInBackground(Integer... params) {
+        favouriteBtn = (ImageView) findViewById(R.id.fav);
+        displayText = (TextView) findViewById(R.id.display);
 
-			try {
-				return FavouriteDB.getInstance(getApplicationContext())
-						.checkVerse(params[0], params[1], params[2]);
-			} catch (Exception e) {
-				return false;
-			}
-		}
+        new FetchVerseTask().execute(bid, cid, vid);
+        new CheckFavouriteTask().execute(bid, cid, vid);
 
-		@Override
-		protected void onPostExecute(Boolean result) {
-			if (result) {
-				favouriteBtn.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.mipmap.ic_fav));
-				isFavourite = true;
-			} else {
-				favouriteBtn.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.mipmap.ic_add));
-				isFavourite = false;
+        favouriteBtn.setOnClickListener(new OnClickListener() {
 
-			}
-			pBar.dismiss();
-		}
-	}
+            @Override
+            public void onClick(View v) {
+                if (isFavourite) {
+                    new RemoveFavouriteTask().execute(bid, cid, vid);
+                } else {
+                    new AddFavouriteTask().execute(bid, cid, vid);
 
-	private class AddFavouriteTask extends AsyncTask<Integer, Void, Boolean> {
-		private ProgressDialog pBar;
+                }
 
-		@Override
-		protected void onPreExecute() {
-			pBar = new ProgressDialog(DisplayVerse.this);
-			pBar.setCancelable(false);
-			pBar.show();
-		}
+            }
+        });
+        fb.setOnClickListener(new OnClickListener() {
 
-		@Override
-		protected Boolean doInBackground(Integer... params) {
+            @Override
+            public void onClick(View v) {
+                Intent shareIntent = new Intent(
+                        android.content.Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(android.content.Intent.EXTRA_TEXT,
+                        getSelection());
+                v.getContext().startActivity(
+                        Intent.createChooser(shareIntent, "شير"));
+            }
+        });
+        tw.setOnClickListener(new OnClickListener() {
 
-			try {
-				return FavouriteDB.getInstance(getApplicationContext())
-						.addVerse(params[0], params[1], params[2], "");
-			} catch (Exception e) {
-				return false;
-			}
-		}
+            @Override
+            public void onClick(View v) {
 
-		@Override
-		protected void onPostExecute(Boolean result) {
-			if (result == true) {
-				favouriteBtn.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.mipmap.ic_fav));
-				isFavourite = true;
-				Toast.makeText(getApplicationContext(), R.string.msg_added,
-						Toast.LENGTH_SHORT).show();
-			}
-			pBar.dismiss();
-		}
-	}
+                String tweetUrl = String.format(
+                        "https://twitter.com/intent/tweet?text=%s",
+                        urlEncode(getSelection()));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri
+                        .parse(tweetUrl));
 
-	private class RemoveFavouriteTask extends AsyncTask<Integer, Void, Boolean> {
-		private ProgressDialog pBar;
+                List<ResolveInfo> matches = getPackageManager()
+                        .queryIntentActivities(intent, 0);
+                for (ResolveInfo info : matches) {
+                    if (info.activityInfo.packageName.toLowerCase().startsWith(
+                            "com.twitter")) {
+                        intent.setPackage(info.activityInfo.packageName);
+                    }
+                }
 
-		@Override
-		protected void onPreExecute() {
-			pBar = new ProgressDialog(DisplayVerse.this);
-			pBar.setCancelable(false);
-			pBar.show();
-		}
+                startActivity(intent);
+            }
+        });
+    }
 
-		@Override
-		protected Boolean doInBackground(Integer... params) {
+    private String getSelection() {
+        String temp = displayText.getText().toString();
 
-			try {
-				FavouriteDB.getInstance(getApplicationContext()).removeVerse(
-						params[0], params[1], params[2]);
-				return true;
-			} catch (Exception e) {
-				return false;
-			}
-		}
+        if (displayText.isFocused()) {
+            int selStart = displayText.getSelectionStart();
+            int selEnd = displayText.getSelectionEnd();
 
-		@Override
-		protected void onPostExecute(Boolean result) {
-			if (result == true) {
-				favouriteBtn.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.mipmap.ic_add));
-				isFavourite = false;
-				Toast.makeText(getApplicationContext(), R.string.msg_removed,
-						Toast.LENGTH_SHORT).show();
-			}
-			pBar.dismiss();
-		}
-	}
+            temp = displayText
+                    .getText()
+                    .subSequence(Math.max(0, Math.min(selStart, selEnd)),
+                            Math.max(0, Math.max(selStart, selEnd))).toString();
+            if (temp.length() < 2)
+                temp = displayText.getText().toString();
+        }
+        return temp;
+    }
 
-	private String urlEncode(String s) {
-		try {
-			return URLEncoder.encode(s, "UTF-8");
-		} catch (Exception e) {
-			return "";
-		}
-	}
+    private class FetchVerseTask extends AsyncTask<Integer, Void, String> {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_display_verse);
+        @Override
+        protected String doInBackground(Integer... params) {
 
-		final int bid = getIntent().getIntExtra("bid", 0), cid = getIntent()
-				.getIntExtra("cid", 1), vid = getIntent().getIntExtra("vid", 1);
+            try {
+                return DB.getInstance(getApplicationContext()).getVerse(
+                        params[0], params[1], params[2]);
+            } catch (Exception e) {
+                return null;
+            }
+        }
 
-		shahd = BibileInfo.shahhd[bid] + "(" + BibileInfo.getArabicNum(cid)
-				+ " : " + BibileInfo.getArabicNum(vid) + ")";
+        @Override
+        protected void onPostExecute(String str) {
+            if (str != null)
+                displayText.setText(str + " " + shahd);
+            else
+                Toast.makeText(getApplicationContext(), R.string.err_msg_db,
+                        Toast.LENGTH_SHORT).show();
+        }
+    }
 
-		((TextView) findViewById(R.id.subhead)).setText(shahd);
+    private class CheckFavouriteTask extends AsyncTask<Integer, Void, Boolean> {
+        private ProgressDialog pBar;
 
-		TextView tw = (TextView) findViewById(R.id.tw_iv);
-		TextView fb = (TextView) findViewById(R.id.fb_iv);
+        @Override
+        protected void onPreExecute() {
+            pBar = new ProgressDialog(DisplayVerse.this);
+            pBar.setCancelable(false);
+            pBar.show();
+        }
 
-		favouriteBtn = (ImageView) findViewById(R.id.fav);
-		displayText = (TextView) findViewById(R.id.display);
+        @Override
+        protected Boolean doInBackground(Integer... params) {
 
-		new FetchVerseTask().execute(bid, cid, vid);
-		new CheckFavouriteTask().execute(bid, cid, vid);
+            try {
+                return FavouriteDB.getInstance(getApplicationContext())
+                        .checkVerse(params[0], params[1], params[2]);
+            } catch (Exception e) {
+                return false;
+            }
+        }
 
-		favouriteBtn.setOnClickListener(new OnClickListener() {
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if (result) {
+                favouriteBtn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.mipmap.ic_fav));
+                isFavourite = true;
+            } else {
+                favouriteBtn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.mipmap.ic_add));
+                isFavourite = false;
 
-			@Override
-			public void onClick(View v) {
-				if (isFavourite) {
-					new RemoveFavouriteTask().execute(bid, cid, vid);
-				} else {
-					new AddFavouriteTask().execute(bid, cid, vid);
+            }
+            pBar.dismiss();
+        }
+    }
 
-				}
+    private class AddFavouriteTask extends AsyncTask<Integer, Void, Boolean> {
+        private ProgressDialog pBar;
 
-			}
-		});
-		fb.setOnClickListener(new OnClickListener() {
+        @Override
+        protected void onPreExecute() {
+            pBar = new ProgressDialog(DisplayVerse.this);
+            pBar.setCancelable(false);
+            pBar.show();
+        }
 
-			@Override
-			public void onClick(View v) {
-				Intent shareIntent = new Intent(
-						android.content.Intent.ACTION_SEND);
-				shareIntent.setType("text/plain");
-				shareIntent.putExtra(android.content.Intent.EXTRA_TEXT,
-						getSelection());
-				v.getContext().startActivity(
-						Intent.createChooser(shareIntent, "شير"));
-			}
-		});
-		tw.setOnClickListener(new OnClickListener() {
+        @Override
+        protected Boolean doInBackground(Integer... params) {
 
-			@Override
-			public void onClick(View v) {
+            try {
+                return FavouriteDB.getInstance(getApplicationContext())
+                        .addVerse(params[0], params[1], params[2], "");
+            } catch (Exception e) {
+                return false;
+            }
+        }
 
-				String tweetUrl = String.format(
-						"https://twitter.com/intent/tweet?text=%s",
-						urlEncode(getSelection()));
-				Intent intent = new Intent(Intent.ACTION_VIEW, Uri
-						.parse(tweetUrl));
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if (result == true) {
+                favouriteBtn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.mipmap.ic_fav));
+                isFavourite = true;
+                Toast.makeText(getApplicationContext(), R.string.msg_added,
+                        Toast.LENGTH_SHORT).show();
+            }
+            pBar.dismiss();
+        }
+    }
 
-				List<ResolveInfo> matches = getPackageManager()
-						.queryIntentActivities(intent, 0);
-				for (ResolveInfo info : matches) {
-					if (info.activityInfo.packageName.toLowerCase().startsWith(
-							"com.twitter")) {
-						intent.setPackage(info.activityInfo.packageName);
-					}
-				}
+    private class RemoveFavouriteTask extends AsyncTask<Integer, Void, Boolean> {
+        private ProgressDialog pBar;
 
-				startActivity(intent);
-			}
-		});
-	}
+        @Override
+        protected void onPreExecute() {
+            pBar = new ProgressDialog(DisplayVerse.this);
+            pBar.setCancelable(false);
+            pBar.show();
+        }
 
-	private String getSelection() {
-		String temp = displayText.getText().toString();
+        @Override
+        protected Boolean doInBackground(Integer... params) {
 
-		if (displayText.isFocused()) {
-			int selStart = displayText.getSelectionStart();
-			int selEnd = displayText.getSelectionEnd();
+            try {
+                FavouriteDB.getInstance(getApplicationContext()).removeVerse(
+                        params[0], params[1], params[2]);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
 
-			temp = displayText
-					.getText()
-					.subSequence(Math.max(0, Math.min(selStart, selEnd)),
-							Math.max(0, Math.max(selStart, selEnd))).toString();
-			if (temp.length() < 2)
-				temp = displayText.getText().toString();
-		}
-		return temp;
-	}
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if (result == true) {
+                favouriteBtn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.mipmap.ic_add));
+                isFavourite = false;
+                Toast.makeText(getApplicationContext(), R.string.msg_removed,
+                        Toast.LENGTH_SHORT).show();
+            }
+            pBar.dismiss();
+        }
+    }
 }

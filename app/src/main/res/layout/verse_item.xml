@@ -3,14 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/dynamic_bg"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/headertv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dip"
         android:layout_marginTop="5dip"
+        android:layout_marginBottom="5dip"
         android:gravity="center"
         android:textColor="@color/blue3"
         android:textDirection="rtl"
@@ -21,9 +21,9 @@
         android:id="@+id/versetv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dip"
         android:layout_marginLeft="5dip"
         android:layout_marginRight="10dip"
+        android:layout_marginBottom="10dip"
         android:gravity="right"
         android:lineSpacingMultiplier="1.3"
         android:textColor="@color/dynamic_text"

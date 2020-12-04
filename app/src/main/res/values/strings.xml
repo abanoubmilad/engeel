@@ -4,7 +4,7 @@
     <string name="app_name">إنجيل</string>
     <string name="search_new_test">عهد جديد</string>
     <string name="search_old_test">عهد قديم</string>
-    <string name="copyright">engeel 1.4 ©%1$s Abanoub M.</string>
+    <string name="copyright">engeel %1$s ©%2$s Abanoub Milad Hanna</string>
     <string name="share">شير</string>
     <string name="tweet">تويت</string>
     <string name="searchbible">بحث كتاب مقدس</string>
@@ -18,5 +18,5 @@
     <string name="msg.added">تم اضافة الآية الى الآيات المٌفضلة</string>
     <string name="msg.removed">تم ازالة الآية من الآيات المٌفضلة</string>
     <string name="msg.no.fav">ﻻ توجد آيات مُفضلة</string>
-    
+
 </resources>
