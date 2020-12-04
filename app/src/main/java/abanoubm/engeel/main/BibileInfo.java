@@ -123,8 +123,8 @@ public class BibileInfo {
 
     public static String getBibleChapterStr(int bid, int cid) {
         if (bid == 20)
-            return bibleNames[bid] + " - " + " مَزْمُورُُ " + getArabicNum(cid);
-        return bibleNames[bid] + " - " + "الأصحَاحُ " + chapterNames[cid - 1];
+            return bibleNames[bid] + " \n " + " مَزْمُورُُ " + getArabicNum(cid);
+        return bibleNames[bid] + " \n " + "الأصحَاحُ " + chapterNames[cid - 1];
 
     }
 

@@ -21,7 +21,7 @@ public class ChapterChooser extends Activity {
 
         final int bid = getIntent().getIntExtra("bid", 0);
 
-        ((TextView) findViewById(R.id.subhead)).setText("أصحاحات "
+        ((TextView) findViewById(R.id.subhead)).setText("أصحاحات " + "\n"
                 + BibileInfo.bibleNames[bid]);
 
         GridView grid = (GridView) findViewById(R.id.grid_view);

@@ -11,8 +11,10 @@
         android:gravity="right"
         android:lineSpacingMultiplier="1.2"
         android:paddingTop="5dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:paddingBottom="5dp"
         android:textColor="@color/dynamic_text"
-        android:textSize="28sp" />
+        android:textSize="@dimen/font_large" />
 
 </FrameLayout>

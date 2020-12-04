@@ -45,7 +45,7 @@ public class DisplayVerse extends Activity {
         final int bid = getIntent().getIntExtra("bid", 0), cid = getIntent()
                 .getIntExtra("cid", 1), vid = getIntent().getIntExtra("vid", 1);
 
-        shahd = BibileInfo.shahhd[bid] + "(" + BibileInfo.getArabicNum(cid)
+        shahd = BibileInfo.shahhd[bid] +"\n"+ "(" + BibileInfo.getArabicNum(cid)
                 + " : " + BibileInfo.getArabicNum(vid) + ")";
 
         ((TextView) findViewById(R.id.subhead)).setText(shahd);

@@ -11,8 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.9"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:verticalScrollbarPosition="left"></ListView>
+        android:verticalScrollbarPosition="left"/>
 
 </LinearLayout>

@@ -14,7 +14,7 @@
         android:gravity="center"
         android:textColor="@color/blue3"
         android:textDirection="rtl"
-        android:textSize="24sp"
+        android:textSize="@dimen/font_med"
         android:textStyle="bold" />
 
     <TextView
@@ -28,6 +28,6 @@
         android:lineSpacingMultiplier="1.3"
         android:textColor="@color/dynamic_text"
         android:textDirection="rtl"
-        android:textSize="20sp" />
+        android:textSize="@dimen/font_large" />
 
 </LinearLayout>

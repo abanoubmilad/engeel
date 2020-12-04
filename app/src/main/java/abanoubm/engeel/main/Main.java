@@ -76,12 +76,11 @@ public class Main extends Activity {
                         break;
                     case 5:
                         try {
-                            getPackageManager().getPackageInfo("com.facebook.katana", 0);
                             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://profile/1363784786"))
                                     .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                         } catch (Exception e) {
                             startActivity(
-                                    new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/EngineeroBono"))
+                                    new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/abanoubmiladhanna/"))
                                             .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                         }
                         break;

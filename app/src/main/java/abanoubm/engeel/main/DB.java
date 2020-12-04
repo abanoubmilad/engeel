@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Environment;
 import android.text.Html;
 import android.text.Spanned;
 
@@ -20,7 +19,6 @@ import java.util.zip.ZipInputStream;
 import abanoubm.engeel.data.Verse;
 
 public class DB extends SQLiteOpenHelper {
-    private static String DB_PATH = "";
     private static String DB_NAME = ".systedefault";
     private static String assets_DB_NAME = "systedefault.zip";
     private static String Tb_NAME = "bshara_tb";
@@ -30,26 +28,13 @@ public class DB extends SQLiteOpenHelper {
 
     private DB(Context context) throws IOException {
         super(context, DB_NAME, null, 1);
-        if (android.os.Environment.getExternalStorageState().equals(
-                android.os.Environment.MEDIA_MOUNTED)) {
-            DB_PATH = Environment.getExternalStorageDirectory()
-                    .getAbsolutePath() + "/.systfile/";
-        } else {
-            if (android.os.Build.VERSION.SDK_INT >= 17) {
-                DB_PATH = context.getApplicationInfo().dataDir + "/.systfile/";
-            } else {
-                DB_PATH = "/data/data/" + context.getPackageName()
-                        + "/.systfile/";
-            }
-        }
         this.mContext = context;
 
-        String mPath = DB_PATH + DB_NAME;
 
-        if (!new File(DB_PATH + DB_NAME).exists())
+        if (!new File(DB_NAME).exists())
             unpackZip();
 
-        db = SQLiteDatabase.openDatabase(mPath, null,
+        db = SQLiteDatabase.openDatabase(DB_NAME, null,
                 SQLiteDatabase.CREATE_IF_NECESSARY);
     }
 
@@ -81,10 +66,10 @@ public class DB extends SQLiteOpenHelper {
             byte[] buffer = new byte[1024 * 4];
             int count;
 
-            File dir = new File(DB_PATH);
+            File dir = new File(DB_NAME);
             dir.mkdirs();
 
-            FileOutputStream fout = new FileOutputStream(DB_PATH + DB_NAME);
+            FileOutputStream fout = new FileOutputStream(DB_NAME);
 
             while ((count = zis.read(buffer)) != -1) {
                 baos.write(buffer, 0, count);

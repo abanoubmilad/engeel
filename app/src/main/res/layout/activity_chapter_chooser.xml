@@ -11,6 +11,6 @@
         android:layout_height="fill_parent"
         android:horizontalSpacing="0dp"
         android:numColumns="5"
-        android:verticalSpacing="0dp"></GridView>
+        android:verticalSpacing="0dp"/>
 
 </LinearLayout>

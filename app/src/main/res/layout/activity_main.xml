@@ -31,7 +31,7 @@
             android:paddingBottom="5dp"
             android:text="الكتاب المقدس\n وعد حقيقى كل يوم"
             android:textColor="#ffffff"
-            android:textSize="20sp"
+            android:textSize="@dimen/font_large"
             android:textStyle="bold" />
     </RelativeLayout>
 
@@ -41,9 +41,7 @@
         android:layout_height="0dp"
         android:layout_weight="0.65"
         android:background="@color/white"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:verticalScrollbarPosition="left"></ListView>
+        android:verticalScrollbarPosition="left" />
 
     <TextView
         android:id="@+id/footer"
@@ -53,6 +51,6 @@
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/copyright"
         android:textColor="#ffffff"
-        android:textSize="12sp" />
+        android:textSize="14sp" />
 
 </LinearLayout>
