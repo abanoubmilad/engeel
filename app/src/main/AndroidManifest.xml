@@ -1,9 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="abanoubm.engeel">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,14 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="abanoubm.engeel.opr.BibleChooser"></activity>
-        <activity android:name="abanoubm.engeel.opr.ChapterChooser"></activity>
-        <activity android:name="abanoubm.engeel.opr.DisplaySearchResults"></activity>
-        <activity android:name="abanoubm.engeel.opr.DisplayVerse"></activity>
-        <activity android:name="abanoubm.engeel.opr.Search"></activity>
-        <activity android:name="abanoubm.engeel.main.Main"></activity>
-        <activity android:name="abanoubm.engeel.opr.ShahdDisplay"></activity>
-        <activity android:name="abanoubm.engeel.opr.VerseChooser"></activity>
+        <activity android:name="abanoubm.engeel.opr.BibleChooser" />
+        <activity android:name="abanoubm.engeel.opr.ChapterChooser" />
+        <activity android:name="abanoubm.engeel.opr.DisplaySearchResults" />
+        <activity android:name="abanoubm.engeel.opr.DisplayVerse" />
+        <activity android:name="abanoubm.engeel.opr.Search" />
+        <activity android:name="abanoubm.engeel.main.Main" />
+        <activity android:name="abanoubm.engeel.opr.ShahdDisplay" />
+        <activity android:name="abanoubm.engeel.opr.VerseChooser" />
     </application>
 
 </manifest>

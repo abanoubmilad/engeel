@@ -19,6 +19,7 @@ import java.util.zip.ZipInputStream;
 import abanoubm.engeel.data.Verse;
 
 public class DB extends SQLiteOpenHelper {
+    private static String DB_PATH = "";
     private static String DB_NAME = ".systedefault";
     private static String assets_DB_NAME = "systedefault.zip";
     private static String Tb_NAME = "bshara_tb";
@@ -28,13 +29,15 @@ public class DB extends SQLiteOpenHelper {
 
     private DB(Context context) throws IOException {
         super(context, DB_NAME, null, 1);
+        DB_PATH = context.getFilesDir().getPath();
         this.mContext = context;
 
+        String mPath = DB_PATH + DB_NAME;
 
-        if (!new File(DB_NAME).exists())
+        if (!new File(DB_PATH + DB_NAME).exists())
             unpackZip();
 
-        db = SQLiteDatabase.openDatabase(DB_NAME, null,
+        db = SQLiteDatabase.openDatabase(mPath, null,
                 SQLiteDatabase.CREATE_IF_NECESSARY);
     }
 
@@ -66,10 +69,10 @@ public class DB extends SQLiteOpenHelper {
             byte[] buffer = new byte[1024 * 4];
             int count;
 
-            File dir = new File(DB_NAME);
+            File dir = new File(DB_PATH);
             dir.mkdirs();
 
-            FileOutputStream fout = new FileOutputStream(DB_NAME);
+            FileOutputStream fout = new FileOutputStream(DB_PATH + DB_NAME);
 
             while ((count = zis.read(buffer)) != -1) {
                 baos.write(buffer, 0, count);

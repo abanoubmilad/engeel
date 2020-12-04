@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <EditText
@@ -20,7 +20,24 @@
             android:hint="اصحاح"
             android:inputType="number"
             android:maxLength="3"
+            android:textAlignment="center"
             android:textSize="@dimen/font_large" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ادخل الاصحاح"
+            android:textSize="@dimen/font_large" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/numbtv"
@@ -30,9 +47,24 @@
             android:hint="عدد"
             android:inputType="number"
             android:maxLength="3"
+            android:textAlignment="center"
             android:textSize="@dimen/font_large" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ادخل العدد"
+            android:textSize="@dimen/font_large" />
+
+
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="اختر الشاهد"
+        android:textAlignment="textStart"
+        android:textSize="@dimen/font_large" />
 
     <GridView
         android:id="@+id/grid_view"

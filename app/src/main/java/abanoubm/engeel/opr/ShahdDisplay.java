@@ -58,12 +58,20 @@ public class ShahdDisplay extends Activity {
                             Toast.LENGTH_SHORT).show();
                 } else {
                     startActivity(new Intent(getApplicationContext(),
-                            DisplayVerse.class).putExtra("cid", chn)
-                            .putExtra("bid", position).putExtra("vid", num));
+                            DisplayVerse.class).putExtra("cid", parseAsInt(chn, 1))
+                            .putExtra("bid", position).putExtra("vid", parseAsInt(num, 1)));
                 }
 
             }
         });
 
+    }
+
+    private int parseAsInt(String str, int defaultValue) {
+        try {
+            return Integer.parseInt(str);
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
     }
 }
